@@ -381,10 +381,10 @@
         let currentType = 'search', currentQuery = '', currentGenreId = '', currentPage = 1, activeMedia = 'movie';
 
         window.onload = () => {
-            // FILTER UNTUK DIGITAL RELEASE (VOD & STREAMING)
-            // monotype 2 & 3 adalah Digital Rent/Buy, monotype 4 adalah Flatrate/Streaming
             const today = new Date().toISOString().split('T')[0];
-            const digitalUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&include_video=false&language=en-US&page=1&release_date.lte=${today}&sort_by=primary_release_date.desc&with_release_type=4|5|6`;
+            
+            // FILTER: Rilis Digital (type 4,5,6), Maksimal Hari ini, Minimal 10 Vote agar data valid
+            const digitalUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&language=en-US&page=1&release_date.lte=${today}&sort_by=primary_release_date.desc&with_release_type=4|5|6&vote_count.gte=10`;
             
             renderSimpleList(digitalUrl, 'digitalGrid', 12);
             renderSimpleList(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`, 'popularTVGrid', 12);
