@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReleaseMap | Global Streaming Tracker</title>
+    <title>StreamFinder Pro | Global Streaming</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,7 +16,9 @@
             --glass: rgba(10, 10, 15, 0.8);
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
@@ -62,7 +64,9 @@
             cursor: pointer;
         }
 
-        .logo span { color: var(--accent); }
+        .logo span {
+            color: var(--accent);
+        }
 
         .nav-search {
             display: none;
@@ -86,7 +90,9 @@
             background: rgba(255, 255, 255, 0.12);
         }
 
-        .show-nav-search { display: block; }
+        .show-nav-search {
+            display: block;
+        }
 
         /* --- GRID & CARD --- */
         .movie-grid {
@@ -118,7 +124,10 @@
             background: #111;
         }
 
-        .card-meta { padding: 15px; font-size: 0.85rem; }
+        .card-meta {
+            padding: 15px;
+            font-size: 0.85rem;
+        }
 
         .media-badge {
             position: absolute;
@@ -137,7 +146,11 @@
         .badge-tv { background: #0070f3; color: white; }
 
         /* --- DETAIL PAGE --- */
-        #detailPage { display: none; min-height: 100vh; position: relative; }
+        #detailPage {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+        }
 
         .full-backdrop {
             position: fixed;
@@ -190,7 +203,11 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
         }
 
-        .detail-info { flex: 1; min-width: 300px; padding-top: 10px; }
+        .detail-info {
+            flex: 1;
+            min-width: 300px;
+            padding-top: 10px;
+        }
 
         .detail-title {
             font-size: clamp(2.5rem, 5vw, 4rem);
@@ -314,7 +331,7 @@
 
     <nav class="main-nav">
         <div class="container nav-container">
-            <a href="#" class="logo" onclick="location.reload()">RELEASE<span>MAP</span></a>
+            <a href="#" class="logo" onclick="location.reload()">STREAM<span>FINDER</span></a>
             <div id="navSearchWrapper" class="nav-search">
                 <input type="text" id="navSearchInput" placeholder="Quick search titles...">
             </div>
@@ -325,7 +342,7 @@
     <main class="container">
         <div id="homePage">
             <header class="hero-header">
-                <div style="display: inline-block; padding: 6px 15px; border-radius: 30px; background: rgba(229, 9, 20, 0.1); color: var(--accent); font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 25px; border: 1px solid rgba(229, 9, 20, 0.2);">DIGITAL & STREAMING TRACKER</div>
+                <div style="display: inline-block; padding: 6px 15px; border-radius: 30px; background: rgba(229, 9, 20, 0.1); color: var(--accent); font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 25px; border: 1px solid rgba(229, 9, 20, 0.2);">STREAMING SEARCH ENGINE</div>
                 <h1 class="hero-title">Everything.<br>Everywhere.</h1>
                 <div style="max-width: 750px; margin: 50px auto 0; position: relative;">
                     <input type="text" id="searchInput" placeholder="Search movies, TV shows, or genres...">
@@ -346,18 +363,17 @@
             </div>
 
             <div id="defaultContent">
-                <h2 style="border-left: 4px solid var(--accent); padding-left: 15px; margin-bottom: 30px; font-size: 1.5rem;">New Digital Releases</h2>
-                <div id="digitalGrid" class="movie-grid"></div>
-
-                <h2 style="border-left: 4px solid var(--accent); padding-left: 15px; margin: 50px 0 30px; font-size: 1.5rem;">Popular TV Series</h2>
-                <div id="popularTVGrid" class="movie-grid"></div>
+                <h2 style="border-left: 4px solid var(--accent); padding-left: 15px; margin-bottom: 30px; font-size: 1.5rem;">Trending Now</h2>
+                <div id="trendingGrid" class="movie-grid"></div>
+                <h2 style="border-left: 4px solid var(--accent); padding-left: 15px; margin: 50px 0 30px; font-size: 1.5rem;">Now Playing</h2>
+                <div id="newGrid" class="movie-grid"></div>
             </div>
         </div>
 
         <div id="detailPage">
             <div id="bgCanvas" class="full-backdrop"></div>
             <div class="full-overlay"></div>
-            <div class="btn-back" onclick="goHome()">← Back to Search</div>
+            <div class="btn-back" onclick="handleBackClick()">← Back to Search</div>
             <div id="detailHero" class="detail-wrapper"></div>
             <div class="streaming-container">
                 <h3 style="margin-top: 0; color: var(--sub-text); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;">Streaming Availability by Region</h3>
@@ -368,8 +384,8 @@
 
     <footer>
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-            <div class="logo" onclick="location.reload()">RELEASE<span>MAP</span></div>
-            <div style="color: var(--sub-text); font-size: 0.9rem;">© 2025 ReleaseMap. Data by TMDB.</div>
+            <div class="logo" onclick="location.reload()">STREAM<span>FINDER</span></div>
+            <div style="color: var(--sub-text); font-size: 0.9rem;">© 2025 StreamFinder. Data by TMDB.</div>
         </div>
     </footer>
 
@@ -381,13 +397,8 @@
         let currentType = 'search', currentQuery = '', currentGenreId = '', currentPage = 1, activeMedia = 'movie';
 
         window.onload = () => {
-            const today = new Date().toISOString().split('T')[0];
-            
-            // FILTER: Rilis Digital (type 4,5,6), Maksimal Hari ini, Minimal 10 Vote agar data valid
-            const digitalUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&language=en-US&page=1&release_date.lte=${today}&sort_by=primary_release_date.desc&with_release_type=4|5|6&vote_count.gte=10`;
-            
-            renderSimpleList(digitalUrl, 'digitalGrid', 12);
-            renderSimpleList(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`, 'popularTVGrid', 12);
+            renderSimpleList(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`, 'trendingGrid', 6);
+            renderSimpleList(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}`, 'newGrid', 12);
 
             document.getElementById('searchInput').oninput = (e) => triggerSearch(e.target.value);
             document.getElementById('navSearchInput').oninput = (e) => {
@@ -398,6 +409,17 @@
                     triggerSearch(val);
                 }
             };
+        };
+
+        // --- SINGLE PAGE NAVIGATION PATCH ---
+        window.onpopstate = function(event) {
+            if (event.state && event.state.view === 'detail') {
+                // Tampilkan halaman detail berdasarkan state yang disimpan
+                renderDetailPage(event.state.id, event.state.type);
+            } else {
+                // Kembali ke homepage
+                showHomeUI();
+            }
         };
 
         function triggerSearch(q) {
@@ -414,11 +436,9 @@
         }
 
         async function renderSimpleList(url, gridId, count) {
-            try {
-                const res = await fetch(url);
-                const data = await res.json();
-                displayResults(data.results.slice(0, count), gridId);
-            } catch (e) { console.error("Fetch Error:", e); }
+            const res = await fetch(url);
+            const data = await res.json();
+            displayResults(data.results.slice(0, count), gridId);
         }
 
         async function fetch24Results() {
@@ -477,7 +497,13 @@
             });
         }
 
-        async function openDetailPage(id, type) {
+        function openDetailPage(id, type) {
+            // Push state ke history browser sebelum merender
+            history.pushState({ view: 'detail', id: id, type: type }, "", `#detail/${id}`);
+            renderDetailPage(id, type);
+        }
+
+        async function renderDetailPage(id, type) {
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('detailPage').style.display = 'block';
             document.getElementById('navSearchWrapper').classList.add('show-nav-search');
@@ -547,6 +573,26 @@
             });
         }
 
+        function handleBackClick() {
+            // Secara manual memicu tombol back browser
+            history.back();
+        }
+
+        function showHomeUI() {
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('detailPage').style.display = 'none';
+            document.getElementById('navSearchWrapper').classList.remove('show-nav-search');
+            document.getElementById('navSearchInput').value = '';
+        }
+
+        function goHome() {
+            // Digunakan saat navigasi paksa ke home (seperti klik logo)
+            if (window.location.hash) {
+                history.pushState({ view: 'home' }, "", window.location.pathname);
+            }
+            showHomeUI();
+        }
+
         function filterByGenre(id, name, type) {
             currentType = 'genre'; currentGenreId = id; activeMedia = type; currentPage = 1;
             goHome();
@@ -554,13 +600,6 @@
             document.getElementById('dynamicSection').style.display = 'block';
             document.getElementById('dynamicLabel').innerText = `Genre: ${name}`;
             fetch24Results();
-        }
-
-        function goHome() {
-            document.getElementById('homePage').style.display = 'block';
-            document.getElementById('detailPage').style.display = 'none';
-            document.getElementById('navSearchWrapper').classList.remove('show-nav-search');
-            document.getElementById('navSearchInput').value = '';
         }
 
         function changePage(step) { currentPage += step; fetch24Results(); }
