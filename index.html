@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamFinder Pro | Global Streaming</title>
+    <title>ReleaseMap | Global Streaming Tracker</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -331,7 +331,7 @@
 
     <nav class="main-nav">
         <div class="container nav-container">
-            <a href="#" class="logo" onclick="location.reload()">STREAM<span>FINDER</span></a>
+            <a href="#" class="logo" onclick="location.reload()">RELEASE<span>MAP</span></a>
             <div id="navSearchWrapper" class="nav-search">
                 <input type="text" id="navSearchInput" placeholder="Quick search titles...">
             </div>
@@ -384,8 +384,8 @@
 
     <footer>
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-            <div class="logo" onclick="location.reload()">STREAM<span>FINDER</span></div>
-            <div style="color: var(--sub-text); font-size: 0.9rem;">© 2025 StreamFinder. Data by TMDB.</div>
+            <div class="logo" onclick="location.reload()">RELEASE<span>MAP</span></div>
+            <div style="color: var(--sub-text); font-size: 0.9rem;">© 2025 ReleaseMap. Data by TMDB.</div>
         </div>
     </footer>
 
@@ -467,7 +467,7 @@
                 if (!m.poster_path) return;
                 const type = m.media_type || (m.title ? 'movie' : 'tv');
                 
-                // EKSTRAKSI TAHUN
+                // EKSTRAKSI TAHUN UNTUK GRID
                 const fullDate = m.release_date || m.first_air_date || '';
                 const year = fullDate ? `(${fullDate.split('-')[0]})` : '';
 
